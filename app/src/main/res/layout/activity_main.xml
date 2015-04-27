@@ -1,0 +1,92 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:minHeight="40dp"
+        android:background="#ff3f51b5">
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/checkbox_marked_circle"
+            android:layout_gravity="center_vertical|start"
+            android:id="@+id/solve_button"
+            android:contentDescription="@string/solve" />
+
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/close_circle"
+            android:layout_gravity="center_vertical"
+            android:id="@+id/clear_button"
+            android:contentDescription="@string/Clear" />
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|end"
+            android:button="@drawable/custom_checkbox"
+            android:text="@string/step"
+            android:textSize="12sp"
+            android:id="@+id/step_cb"/>
+
+        </android.support.v7.widget.Toolbar>
+
+    <GridView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/gridView"
+        android:layout_centerHorizontal="true"
+        android:numColumns="9"
+        android:horizontalSpacing="2dp"
+        android:verticalSpacing="2dp"
+        android:layout_margin="10dp"
+        android:background="#ff000000"
+        android:layout_below="@+id/toolbar" />
+
+
+
+    <!--<NumberPicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/numberPicker"
+        android:layout_below="@+id/gridView"
+        android:layout_centerHorizontal="true" />-->
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/plus"
+        android:onClick="plusOnClick"
+        android:id="@+id/plusbutton"
+        android:visibility="invisible"
+        android:layout_below="@+id/gridView"
+        android:layout_centerHorizontal="true"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/step_tv"
+        android:text="@string/zero"
+        android:gravity="center"
+        android:visibility="invisible"
+        android:layout_below="@+id/plusbutton"
+        android:layout_centerHorizontal="true"
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/minus"
+        android:id="@+id/minusbutton"
+        android:visibility="invisible"
+        android:onClick="minusOnClick"
+        android:layout_below="@+id/step_tv"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>
