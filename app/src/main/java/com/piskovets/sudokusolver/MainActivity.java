@@ -184,6 +184,7 @@ public class MainActivity extends Activity{
                 strList.set(i*9+j,"");
             }
         }
+        gridView.setEnabled(true);
         adapter.notifyDataSetChanged();
         boardCheck=getGrid(getEmptyGrid());
         stepTv.setText("0");
@@ -194,6 +195,7 @@ public class MainActivity extends Activity{
         isValid=true;
     }
     public void solve(View v){
+        gridView.setEnabled(false);
         stepTv.setText("0");
         if(isValid) {
             grid = SudokuGrid.getGrid(boardCheck);
