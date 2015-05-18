@@ -2,6 +2,8 @@ package com.piskovets.sudokusolver;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.Typeface;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,11 @@ import java.util.List;
 public class SudokuGridAdapter extends BaseAdapter {
     private Activity context;
     private List<String> items;
+    Typeface typeface;
+
+    public void setTypeface(Typeface typeface) {
+        this.typeface = typeface;
+    }
 
     static class ViewHolder{
         public TextView title;
@@ -22,7 +29,7 @@ public class SudokuGridAdapter extends BaseAdapter {
     public SudokuGridAdapter(Activity context, List<String> items) {
         this.context = context;
         this.items = items;
-    }
+            }
 
 
     @Override
@@ -38,9 +45,8 @@ public class SudokuGridAdapter extends BaseAdapter {
     @Override
     public long getItemId(int position){
         return position;
+
     }
-
-
 
     @Override
     public View getView(int position,View convertView,ViewGroup parent){
@@ -53,7 +59,12 @@ public class SudokuGridAdapter extends BaseAdapter {
             rowView.setTag(viewHolder);
         }
         String b=items.get(position);
-        int n=5;
+        int n;
+        if(Build.VERSION.SDK_INT<Build.VERSION_CODES.HONEYCOMB){
+            n=2;
+        }else{
+        n=5;}
+        //n=2;
         ViewHolder holder=(ViewHolder) rowView.getTag();
 
         if(position==0||position==3||position==6||position==27||position==30||position==33||position==54||position==57||position==60){
@@ -82,8 +93,11 @@ public class SudokuGridAdapter extends BaseAdapter {
         }
         holder.title.setText(b);
         holder.title.setBackgroundColor(Color.WHITE);
-        if(holder.title.getText().toString().equals(""))
+        holder.title.setTypeface(typeface);
+
+        if(holder.title.getText().equals("")) {
             holder.title.setTextColor(Color.BLUE);
+        }
         return rowView;
     }
 

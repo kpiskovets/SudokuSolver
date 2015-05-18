@@ -44,9 +44,9 @@
             android:layout_height="wrap_content"
             android:background="@mipmap/arrow_down_bold_circle"
             android:layout_gravity="center_vertical|end"
+            android:layout_marginRight="20dp"
             android:id="@+id/import_button"
             android:contentDescription="@string/Clear" />
-
         </android.support.v7.widget.Toolbar>
 
     <GridView
@@ -55,8 +55,8 @@
         android:id="@+id/gridView"
         android:layout_centerHorizontal="true"
         android:numColumns="9"
-        android:horizontalSpacing="2dp"
-        android:verticalSpacing="2dp"
+        android:horizontalSpacing="1dp"
+        android:verticalSpacing="1dp"
         android:layout_margin="10dp"
         android:background="#ff000000"
         android:layout_below="@+id/toolbar" />

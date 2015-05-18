@@ -7,13 +7,13 @@ import java.util.Set;
 
 public class Cell implements Comparable<Cell> {
 	public static final int DEF = 0;
-	int m_val;
-	boolean m_preFilled = false;
-	Set<Integer> m_constraints = new HashSet<>();
-	int m_row, m_col;
+	int val;
+	boolean preFilled = false;
+	Set<Integer> constraints = new HashSet<>();
+	int row, col;
 
-	public Cell(int m_val) {
-		this.m_val = m_val;
+	public Cell(int val) {
+		this.val = val;
 	}
 
 	public boolean isValid() {
@@ -24,22 +24,22 @@ public class Cell implements Comparable<Cell> {
 	boolean isValid;
 
 	int row() {
-		return m_row;
+		return row;
 	}
 	
 	int col() {
-		return m_col;
+		return col;
 	}
 	Set<Integer> constraints() {
-		return m_constraints;
+		return constraints;
 	}
 	
 	boolean solved() {
-		return m_val != DEF;
+		return val != DEF;
 	}
 	
 	int constraintSize() {
-		return m_constraints.size();  
+		return constraints.size();
 	}
 
 	public void setIsValid(boolean isValid) {
@@ -47,10 +47,10 @@ public class Cell implements Comparable<Cell> {
 	}
 
 	private Cell(int val, int row, int col, boolean preFilled) {
-		m_val = val;
-		m_preFilled = preFilled;
-		m_row = row;
-		m_col = col;
+		this.val = val;
+		this.preFilled = preFilled;
+		this.row = row;
+		this.col = col;
 	}
 
 
@@ -62,15 +62,15 @@ public class Cell implements Comparable<Cell> {
 	}
 
 	int val() {
-		return m_val;
+		return val;
 	}
 
 	void setVal(int m_val) {
-		this.m_val = m_val;
+		this.val = m_val;
 	}
 
 	@Override public String toString() {
-		return "" + m_val + "[" + m_row + "," + m_col + "]";
+		return "" + val + "[" + row + "," + col + "]";
 	}
 
 	@Override
@@ -83,6 +83,6 @@ public class Cell implements Comparable<Cell> {
 	@Override public boolean equals(Object cellObj) {
 		if(!(cellObj instanceof Cell)) return false;
 		Cell cell = (Cell)cellObj;
-		return cell.row() == m_row && cell.col() == m_col;
+		return cell.row() == row && cell.col() == col;
 	}
 }

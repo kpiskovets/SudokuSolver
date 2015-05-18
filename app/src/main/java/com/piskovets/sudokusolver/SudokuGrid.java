@@ -7,19 +7,18 @@ import java.util.List;
 import java.util.Set;
 
 public  class SudokuGrid {
-	int m_size;
-	int m_numNodesExpanded = 0;
-	List<Cell> m_populateList=new ArrayList<>();
-	Cell[][] m_grid;
-	protected Set<Cell> m_constrainedCells = new HashSet<>(200);
+	int size;
+	List<Cell> populateList =new ArrayList<>();
+	Cell[][] grid;
+	protected Set<Cell> constrainedCells = new HashSet<>(200);
 
 	public SudokuGrid(Cell[][] grid) {
-		m_size = grid.length;
-		m_grid = grid;
+		size = grid.length;
+		this.grid = grid;
 		for(Cell[] row: grid)
 			for(Cell cell: row) {
 				if(!cell.solved())
-					this.m_constrainedCells.add(cell);
+					this.constrainedCells.add(cell);
 				else 
 						this.setVal(cell, cell.val());
 			}
@@ -38,22 +37,21 @@ public  class SudokuGrid {
 		return new SudokuGrid(grid);
 	}
 	public boolean solve() {
-		m_numNodesExpanded++;
 		Cell cell = this.getNextUnoccupiedCell();
 		if(cell == null) return true;
 
-		for(int val = 1; val <= m_size; val++) {
+		for(int val = 1; val <= size; val++) {
 			if(cell.constraints().contains(val)) continue;
 			if(this.valid(cell.row(), cell.col(), val)) {
 				int prevVal = cell.val();
-				this.m_constrainedCells.remove(cell);
+				this.constrainedCells.remove(cell);
 				List<Cell> modifiedCells = setVal(cell, val);
-				this.m_populateList.add(cell);
+				this.populateList.add(cell);
 				if(this.solve())
 					return true;
 				cell.setVal(prevVal);
-				this.m_constrainedCells.add(cell);
-				this.m_populateList.remove(cell);
+				this.constrainedCells.add(cell);
+				this.populateList.remove(cell);
 				resetVal(modifiedCells, val);
 			}
 		}
@@ -67,9 +65,9 @@ public  class SudokuGrid {
 	}
 	protected boolean valid(int row, int col, int k) {
 		
-		for(int ind = 0; ind < m_size; ind++) {
-			if((row != ind && m_grid[ind][col].val() == k) || 
-					(col != ind && m_grid[row][ind].val() == k))
+		for(int ind = 0; ind < size; ind++) {
+			if((row != ind && grid[ind][col].val() == k) ||
+					(col != ind && grid[row][ind].val() == k))
 				return false;
 		}
 		int m = (row/3) * 3;
@@ -77,26 +75,26 @@ public  class SudokuGrid {
 		for(int i = m; i < m + 3; i++)
 			for(int j = n; j < n + 3; j++) {
 				if(i == row && j == col) continue;
-				if(this.m_grid[i][j].val() == k)
+				if(this.grid[i][j].val() == k)
 				return false;
 			}
 		return true;
 	}
 	protected String getValue(int row,int col){
-		return String.valueOf(m_grid[row][col].val());
+		return String.valueOf(grid[row][col].val());
 	}
 	
 	protected List<Cell> addConstraints(Cell cell, int k) {
 		
-		List<Cell> updatedCells = new ArrayList<>(m_size);
-		for(int ind = 0; ind < m_size; ind++) {
-			Cell colCell = m_grid[ind][cell.col()];
+		List<Cell> updatedCells = new ArrayList<>(size);
+		for(int ind = 0; ind < size; ind++) {
+			Cell colCell = grid[ind][cell.col()];
 			if(!colCell.solved() && cell.row() != ind && !colCell.constraints().contains(k)) {
 				colCell.constraints().add(k);
 				if(!updatedCells.contains(colCell))
 						updatedCells.add(colCell);
 			}
-			Cell rowCell = m_grid[cell.row()][ind];
+			Cell rowCell = grid[cell.row()][ind];
 			if(!rowCell.solved() && cell.col() != ind && !rowCell.constraints().contains(k)) {
 				rowCell.constraints().add(k);
 				if(!updatedCells.contains(rowCell))
@@ -107,8 +105,8 @@ public  class SudokuGrid {
 		int n = (cell.col()/3) * 3;
 		for(int i = m; i < m + 3; i++)
 			for(int j = n; j < n + 3; j++) {
-				if(m_grid[i][j].solved() || (i == cell.row() && j == cell.col())) continue;
-				Cell groupCell = m_grid[i][j];
+				if(grid[i][j].solved() || (i == cell.row() && j == cell.col())) continue;
+				Cell groupCell = grid[i][j];
 				if(!groupCell.constraints().contains(k)) {
 					groupCell.constraints().add(k);
 					if(!updatedCells.contains(groupCell))
@@ -127,14 +125,14 @@ public  class SudokuGrid {
 	
 	protected Cell getNextUnoccupiedCell() {
 		
-		if(this.m_constrainedCells.size() == 0) return null;
+		if(this.constrainedCells.size() == 0) return null;
 
-		return Collections.max(this.m_constrainedCells);
+		return Collections.max(this.constrainedCells);
 	}
 
 	@Override public String toString() {
 		StringBuilder buff = new StringBuilder();
-		for(Cell[] row: m_grid) {
+		for(Cell[] row: grid) {
 			for(Cell cell: row)
 				buff.append(cell.val()).append(",");
 			buff.append("\n");
